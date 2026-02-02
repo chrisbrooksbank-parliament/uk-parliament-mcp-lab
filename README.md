@@ -2,6 +2,14 @@
 
 This project helps Artificial Intelligence (AI) assistants, like Microsoft Copilot, answer questions using comprehensive official data from the UK Parliament. It acts as a bridge, allowing the AI to access up-to-date, reliable information directly from the source, covering members, bills, voting records, committees, debates, procedures, and much more.
 
+## New development work
+New development work is proceeding on this fork : https://github.com/ChrisBrooksbank/uk-parliament-mcp-lab
+So its recommended to go there.
+
+Highlights : 
+* Easy to install (```pip install uk-parliament-mcp```)  
+* Improvements to documentation and code  
+
 ## 🔥 ESSENTIAL: System Prompt (Required for Best Results!)
 
 **IMPORTANT**: You MUST use the starting system prompt when starting a new conversation. This is critical for accurate responses.
