@@ -5,10 +5,7 @@ This project helps Artificial Intelligence (AI) assistants, like Microsoft Copil
 ## New development work
 New development work is proceeding on this fork : https://github.com/ChrisBrooksbank/uk-parliament-mcp-lab
 So its recommended to go there.
-
-Highlights : 
-* Easy to install (```pip install uk-parliament-mcp```)  
-* Improvements to documentation and code  
+This repo is python, which does make it very eaasy to configure in AI clients.  
 
 ## 🔥 ESSENTIAL: System Prompt (Required for Best Results!)
 
