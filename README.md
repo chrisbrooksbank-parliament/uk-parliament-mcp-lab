@@ -1,7 +1,10 @@
 # UK Parliament AI Assistant
 
-This original repository is no longer the main line of development.
+**This repository is no longer the main line of development***
 A fork has evolved with significant enhancements, fixes, and active maintenance: https://github.com/ChrisBrooksbank/uk-parliament-mcp-lab  
+
+**The fork includes a comprehensive command line interface and can connect to AIS with no installation**
+
 
 This project helps Artificial Intelligence (AI) assistants, like Microsoft Copilot, answer questions using comprehensive official data from the UK Parliament. It acts as a bridge, allowing the AI to access up-to-date, reliable information directly from the source, covering members, bills, voting records, committees, debates, procedures, and much more.
 
