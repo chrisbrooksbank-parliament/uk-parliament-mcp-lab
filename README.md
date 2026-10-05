@@ -41,7 +41,9 @@ If you want the best experience today (especially terminal workflows), start on 
 
 ### MCP in an AI assistant
 
-Ask natural-language questions; the assistant calls Parliament APIs through MCP and returns cited answers.
+> **Note:** Claude Code is not authorised for use on parliamentary PCs. This demo was recorded on a non-parliamentary PC.
+
+Ask natural-language questions; the assistant calls Parliament APIs through MCP and returns cited answers.  
 
 <p align="center">
   <img src="./mcp-demo.gif" width="100%" alt="MCP demo: an AI assistant answering a parliamentary question using live UK Parliament data via MCP">
