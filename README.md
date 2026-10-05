@@ -1,20 +1,129 @@
-# UK Parliament AI Assistant
+<p align="center">
+  <img src="https://img.shields.io/badge/UK%20Parliament-Open%20Data-0b0c0c?style=for-the-badge&labelColor=1d70b8" alt="UK Parliament Open Data">
+  <img src="https://img.shields.io/badge/MCP-Model%20Context%20Protocol-6f42c1?style=for-the-badge" alt="MCP">
+  <img src="https://img.shields.io/badge/.NET-9-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET 9">
+</p>
 
-**This repository is no longer the main line of development***
-A fork has evolved with significant enhancements, fixes, and active maintenance: https://github.com/ChrisBrooksbank/uk-parliament-data-mcp
+<h1 align="center">🇬🇧 UK Parliament AI Assistant</h1>
 
-**The fork includes a comprehensive command line interface and can connect to AIS with no installation**
+<p align="center">
+  <strong>Turn any MCP-capable AI into a live parliamentary research desk.</strong><br>
+  Ask about MPs, Lords, bills, votes, committees, Hansard, and more — answers come from official Parliament APIs, with sources cited every time.
+</p>
 
+<p align="center">
+  <a href="#-quick-start">Quick start</a> ·
+  <a href="#-what-you-can-ask">What you can ask</a> ·
+  <a href="#-setup">Setup</a> ·
+  <a href="#-example-prompts">Example prompts</a> ·
+  <a href="#-active-development-moved">Successor project</a>
+</p>
 
-This project helps Artificial Intelligence (AI) assistants, like Microsoft Copilot, answer questions using comprehensive official data from the UK Parliament. It acts as a bridge, allowing the AI to access up-to-date, reliable information directly from the source, covering members, bills, voting records, committees, debates, procedures, and much more.
+---
 
-## 🔥 ESSENTIAL: System Prompt (Required for Best Results!)
+> [!IMPORTANT]
+> **Active development has moved.** This repository is the original **.NET MCP lab**.  
+> The maintained project — with a full **CLI**, richer tooling, and ongoing fixes — is:  
+> **👉 [ChrisBrooksbank/uk-parliament-data-mcp](https://github.com/ChrisBrooksbank/uk-parliament-data-mcp)**
 
-**IMPORTANT**: You MUST use the starting system prompt when starting a new conversation. This is critical for accurate responses.
+| Capability | This repo (legacy lab) | [Successor project](https://github.com/ChrisBrooksbank/uk-parliament-data-mcp) |
+|---|---|---|
+| MCP server for AI assistants | ✅ .NET | ✅ Python (actively maintained) |
+| Command-line interface (CLI) | ❌ **Not here** | ✅ **Yes — CLI is only on the new repo** |
+| AIS / zero-install options | Limited | ✅ Expanded |
+| Ongoing enhancements & fixes | Archived / low activity | ✅ Active |
 
-The easiest way to do this is to start all new conversations with the prompt  "Hello Parliament".
+If you want the best experience today (especially terminal workflows), start on the [successor repository](https://github.com/ChrisBrooksbank/uk-parliament-data-mcp).
 
-Or you can copy and past the following instead : 
+---
+
+## 🎬 See it in action
+
+### MCP in an AI assistant
+
+Ask natural-language questions; the assistant calls Parliament APIs through MCP and returns cited answers.
+
+<p align="center">
+  <img src="./mcp-demo.gif" width="100%" alt="MCP demo: an AI assistant answering a parliamentary question using live UK Parliament data via MCP">
+</p>
+
+<p align="center"><em>MCP session — live tools, live data, source URLs included.</em></p>
+
+### CLI on the successor project
+
+Prefer the terminal? The **CLI is only available on the new repo** — not in this lab.
+
+<p align="center">
+  <img src="./cli-demo.gif" width="100%" alt="CLI demo from the successor project: terminal commands querying UK Parliament data">
+</p>
+
+<p align="center"><em>CLI demo from <a href="https://github.com/ChrisBrooksbank/uk-parliament-data-mcp">uk-parliament-data-mcp</a> — install and run it there.</em></p>
+
+---
+
+## ✨ Why this exists
+
+Parliamentary data is public — but scattered across many APIs. This project wraps those endpoints as **MCP tools** so assistants like **GitHub Copilot**, **Claude Desktop**, and other MCP clients can:
+
+| Benefit | What it means |
+|--------|----------------|
+| 🎯 **Grounded answers** | Responses are fetched from official `parliament.uk` APIs, not model memory alone |
+| 🔗 **Source transparency** | Every useful answer can list the API URLs used |
+| ⚡ **Broad coverage** | Members, bills, votes, committees, Hansard, questions, calendar, SIs, treaties, interests… |
+| 🧩 **Works where MCP works** | VS Code Copilot Chat (Agent mode), Claude Desktop, and other MCP hosts |
+
+> **Disclaimer:** Unofficial, independent project. Not created, endorsed, or supported by UK Parliament. Data comes from public [Parliament developer APIs](https://developer.parliament.uk/).
+
+---
+
+## 🚀 Quick start
+
+### 1. Prerequisites
+
+- [.NET SDK 9+](https://dotnet.microsoft.com/download)
+- [Git](https://git-scm.com/downloads)
+- An MCP host: [VS Code](https://code.visualstudio.com/) (Copilot Chat) and/or [Claude Desktop](https://claude.ai/download)
+
+### 2. Clone
+
+```bash
+git clone https://github.com/chrisbrooksbank-parliament/opendata-mcp-lab.git
+cd opendata-mcp-lab
+```
+
+### 3. Point your MCP host at the server
+
+**VS Code** — Command Palette → `MCP: Add Server` → **Command (stdio)**:
+
+```bash
+dotnet run --project C:\code\opendata-mcp-lab\OpenData.Mcp.Server\OpenData.Mcp.Server.csproj
+```
+
+(Adjust the path to your clone.)
+
+**Claude Desktop** — edit `claude_desktop_config.json` (UTF-8), then fully restart Claude:
+
+```json
+{
+  "mcpServers": {
+    "opendata-server": {
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "C:\\code\\opendata-mcp-lab\\OpenData.Mcp.Server\\OpenData.Mcp.Server.csproj"
+      ]
+    }
+  }
+}
+```
+
+### 4. Start a session the right way
+
+For best results, **always** begin with the session prompt (or say **"Hello Parliament"**).
+
+<details>
+<summary><strong>📋 Required system prompt (click to expand)</strong></summary>
 
 ```plaintext
 You are a helpful assistant that answers questions using only data from UK Parliament MCP servers.
@@ -36,272 +145,157 @@ If no relevant data is available via the MCP API, state that clearly and do not 
 Convert raw data into human-readable summaries while preserving accuracy, but always list the raw URLs used.
 ```
 
-## What Can I Ask?
+</details>
 
-You can ask questions about virtually all aspects of UK Parliament data. Here are some key areas:
+To disconnect while keeping chat context: **"Goodbye Parliament"**. Or simply start a new chat.
 
-*   **Live Parliamentary Activity:** "What's happening in the House of Commons right now?" or "What's currently being debated in the Lords?"
-*   **Members of Parliament:** "Tell me everything you know about Boris Johnson," "What are Sir Keir Starmer's registered interests?" or "Show me the voting record of member 4129"
-*   **Bills & Legislation:** "Show me details of bill 425," "What amendments were proposed for bill 425?" or "What publications exist for the Environment Bill?"
-*   **Voting Records:** "How did MPs vote on the climate change motion?" or "Show me Lords divisions on healthcare policy"
-*   **Committees & Inquiries:** "Which committees are investigating economic issues?" or "Show me evidence submitted to the Treasury Committee"
-*   **Parliamentary Procedures:** "Search Erskine May for references to Speaker's rulings" or "What are the oral question times this week?"
-*   **Constituencies & Elections:** "Show me election results for Birmingham constituencies" or "List all constituencies in Scotland"
-*   **Official Documents:** "Are there any statutory instruments about housing?" or "What treaties involve trade agreements?"
-*   **Transparency Data:** "Show register of interests for Treasury ministers" or "What are the declared interests categories?"
-
-## Disconnecting from parliament
-
-Start a new chat session, or to keep context but disconnect from Parliament MCP servers prompt : "Goodbye Parliament"
-
-## How Does It Work?
-
-When you ask a question to an AI assistant connected to this tool, it doesn't just guess the answer. Instead, the assistant uses this project to query the official UK Parliament database and provides a response based on the data it finds.
-
-This means the answers you get are more likely to be accurate and based on facts.
-
----
-
-## Installation and Usage Guide
-
-This project makes public UK Parliamentary data accessible to large language models (LLMs/AIs) using the [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol).
-
-It enables AI tools (e.g. Microsoft Copilot) to answer questions about UK Parliamentary data, as long as they support the MCP protocol.
-
-> ✅ This project provides comprehensive coverage of UK Parliamentary data including members, bills, amendments, voting records, committees, debates, procedures, constituencies, and official documents.
-> Additional data sources and endpoints are continuously being added.
-
-Since AI is involved, some responses may be inaccurate. See **Prompting Tips** below to improve reliability.
-
-### Installation & Setup
-
-This section explains how to configure Microsoft Copilot in Visual Studio Code to query UK Parliamentary data via the MCP server.
-
-#### Prerequisites
-
-Make sure you have the following installed:
-
-- [.NET SDK](https://dotnet.microsoft.com/en-us/download) (v9 or later recommended)
-- [Git](https://git-scm.com/downloads)
-- [Visual Studio Code](https://code.visualstudio.com/download)
-
-#### Clone and Open the Project
-
-```bash
-git clone https://github.com/chrisbrooksbank-parliament/opendata-mcp-lab.git
-cd opendata-mcp-lab
-```
-
-Or download manually and open the folder in VS Code.
-
-#### Add MCP Server in Claude Desktop Application  
-
-* Open the claude desktop application  
-* Click settings   
-* Click Developer tag  
-* Click Edit Config  
-* Edit file and save with UTF-8 encoding  
-* Exit claude ( with TaskMon if needed ) and restart it  
-* Open developer tab again and check it is running  
-* Enter the system prompt and test its working ok  
-
-Example claude_desktop_config.json file contents : 
-
-```json
-{
-  "mcpServers": {
-    "opendata-server": {
-      "command": "dotnet",
-      "args": [
-        "run",
-        "--project",
-        "C:\\code\\opendata-mcp-lab\\OpenData.Mcp.Server\\OpenData.Mcp.Server.csproj"
-      ]
-    }
-  }
-}
-```
-
-
-
-
-
-#### Add MCP Server in VS Code
-
-1.  Press `Ctrl+Shift+P` to open the Command Palette.
-2.  Select **MCP: Add Server**.
-3.  Choose **Command: Stdio**.
-4.  Enter the following command (adjust path if needed):
-
-```bash
-dotnet run --project C:\code\opendata-mcp-lab\OpenData.Mcp.Server\OpenData.Mcp.Server.csproj
-```
-
-5.  Press **Enter**.
-
-#### Start the Server
-
-1.  Press `Ctrl+Shift+P` again.
-2.  Select **MCP: List Servers**.
-3.  Click the server you just added and choose **Start server**.
-
-#### First Interaction
-
-1.  Open **Copilot Chat** in VS Code.
-2.  Set **Agent mode** using the dropdown in the bottom-left.
-3.  Select your prefferred model e.g. Claude Sonnet 4
-4.  Click **Configure Tools**, and select all tools from the newly added MCP server.
-5.  (enter the system prompt and then) Try a prompt such as:
+**Try:**
 
 ```plaintext
 What is happening now in the House of Commons?
 ```
 
-6.  Accept any permission request to allow the MCP call.
+---
 
-### Prompting Tips
+## 🗺 What you can ask
 
-#### ✅ System Prompt
-
-Always begin your session with the **System Prompt** defined at the top of this guide. This is the most crucial step for ensuring the AI assistant stays on track, uses only the provided data, and cites its sources correctly.
-
-#### 🔄 Clear Context
-
-Use the `+` icon (new chat) if:
-- The AI seems stuck in a loop
-- You want to reset the conversation context
-
-#### 🔗 Re-Display the API URL
-
-While the AI is instructed to list source URLs automatically, you can ask for them again at any time. This is useful for troubleshooting or if you simply want to re-confirm the source for the last response.
-
-You can ask : 
-
-```plaintext
-Show me the API URL you just used.
-```
-
-Example response:
-> The API URL just used to retrieve information about Boris Johnson is:
-> `https://members-api.parliament.uk/api/Members/Search?Name=Boris%20Johnson`
-
-#### 🧠 Combine Data from Multiple Sources
-
-Example:
-```plaintext
-Has Chelmsford been mentioned in either the Commons or Lords?
-```
-
-The AI may:
-- Query both Commons and Lords Hansard
-- Combine the results
-- Offer more detail if requested
-
-#### 🧾 See the Raw JSON
-
-For debugging or to inspect the raw data structure, you can ask the assistant to show you the full JSON response from its last API call. This is particularly useful for developers who want to understand exactly what information the AI is working with before it is summarized.
-
-Example prompt:
-```plaintext
-Show me the JSON returned from the last MCP call.
-```
-
-### Example Prompts
-
-#### 🏛️ Live Parliamentary Activity
-- What is happening now in both Houses?
-- What's currently happening in the House of Commons?
-- What's currently happening in the House of Lords?
-
-#### 👥 Members of Parliament
-- Show me the interests of Sir Keir Starmer
-- Who is Boris Johnson?
-- Who is the member with ID 1471?
-- Get the biography of member 172
-- Show me contact details for member 4129
-- What are the registered interests of member 3743?
-- Show recent contributions from member 172
-- What is the Commons voting record for member 4129?
-- What is the Lords voting record for member 3743?
-- Show the professional experience of member 1471
-- What policy areas does member 172 focus on?
-- Show early day motions submitted by member 1471
-- Get the constituency election results for member 4129
-- Show me the portrait and thumbnail images for member 172
-
-#### 📜 Bills and Legislation
-- What recent bills are about fishing?
-- What bills were updated recently?
-- Show me details of bill 425
-- What stages has bill 425 been through?
-- What amendments were proposed for bill 425 at stage 15?
-- Show me amendment 1234 for bill 425 stage 15
-- What publications exist for bill 425?
-- What news articles are there about bill 425?
-- Show me all bill types available
-- What are the different stages a bill can go through?
-- Search for bills containing the word "environment"
-- Get the RSS feed for all bills
-- Get the RSS feed for public bills only
-- Get the RSS feed for bill 425
-
-#### 🗳️ Voting and Divisions
-- Search Commons Divisions for the keyword "refugee"
-- Show details of Commons division 1234
-- Show details of Lords division 5678
-- Get Commons divisions grouped by party for keyword "climate"
-- Get Lords divisions grouped by party for member 3743
-- How many divisions match the search term "brexit"?
-
-#### 🏢 Committees and Inquiries
-- Which committees are focused on women's issues?
-- List committee meetings scheduled for November 2024
-- Show me details of committee 789
-- What events has committee 789 held?
-- Who are the members of committee 789?
-- Search for committee publications about healthcare
-- Show me written evidence submitted to committee 789
-- Show me oral evidence from committee 789 hearings
-- What are all the committee types?
-
-#### 🏛️ Parliamentary Procedures
-- Search Erskine May for references to the Mace
-- Show oral question times for questions tabled in November 2024
-- Search Hansard for contributions on Brexit from November 2024
-- What government departments exist?
-- What are the answering bodies in Parliament?
-- What parties are represented in the House of Commons?
-- What parties are represented in the House of Lords?
-- Show parliamentary calendar events for Commons in December 2024
-- When is Parliament not sitting in January 2025?
-
-#### 📍 Constituencies and Elections
-- List all UK constituencies
-- Show the election results for constituency 4359
-- Search for constituencies containing "london"
-
-#### 💰 Transparency and Interests
-- List all categories of members' interests
-- Get published registers of interests
-- Show staff interests for Lords members
-- Search the register of interests for member 1471
-
-#### 📋 Official Documents and Publications
-- Are there any statutory instruments about harbours?
-- Search Acts of Parliament that mention roads
-- What treaties involve Spain?
-- What publication types are available for bills?
-- Show me document 123 from publication 456
-
-#### 🔍 Advanced Queries
-- Show the full data from this pasted API result: {PasteApiResultHere}
-- Show me the JSON returned from the last MCP call
-- Show me the API URL you just used
-- Search for bills sponsored by member 172 from the Environment department
-- Find all committee meetings about climate change between November and December 2024
+| Area | Example questions |
+|------|-------------------|
+| 🔴 **Live activity** | What's happening in the Commons right now? What's on in the Lords? |
+| 👥 **Members** | Who is the MP for …? Interests, biography, voting record, contributions |
+| 📜 **Bills & legislation** | Details, stages, amendments, publications, news for a bill |
+| 🗳 **Votes & divisions** | Commons/Lords divisions by topic, member, or division ID |
+| 🏛 **Committees** | Membership, meetings, written/oral evidence, publications |
+| 📖 **Hansard & procedure** | Debates, Erskine May, oral questions, calendar / non-sitting days |
+| 📍 **Constituencies** | Search seats, election results |
+| 📄 **Official docs** | Statutory instruments, treaties, Acts |
+| 💎 **Transparency** | Registers of interests and categories |
 
 ---
 
-## Final Thoughts
+## 🛠 Setup
 
-The project is under active development, with plans to increase data coverage and improve interaction quality. Contributions and feedback are welcome.
+### VS Code + Copilot Chat
+
+1. `Ctrl+Shift+P` → **MCP: Add Server** → **Command: Stdio**
+2. Enter the `dotnet run --project …` command above
+3. **MCP: List Servers** → start the server
+4. Open **Copilot Chat** → **Agent** mode → enable this server’s tools
+5. Paste the system prompt (or **Hello Parliament**), then ask a question
+6. Approve tool/permission prompts when asked
+
+### Claude Desktop
+
+1. **Settings → Developer → Edit Config**
+2. Add the `mcpServers` block shown in Quick start
+3. Save as **UTF-8**, quit Claude completely, relaunch
+4. Confirm the server is running under Developer, then test with the system prompt
+
+### Optional: repo `.mcp.json`
+
+This clone includes a sample `.mcp.json` pointing at a built server binary. Prefer `dotnet run --project …` unless you have already built `OpenData.Mcp.Server`.
+
+---
+
+## 💡 Prompting tips
+
+| Tip | Why it helps |
+|-----|----------------|
+| ✅ Start with the **system prompt** / **Hello Parliament** | Keeps answers on MCP data and forces source URLs |
+| 🆕 New chat (`+`) when stuck | Clears loops and stale context |
+| 🔗 “Show me the API URL you just used.” | Re-surfaces citations for verification |
+| 🧠 Cross-house questions | e.g. “Has Chelmsford been mentioned in Commons or Lords?” |
+| 🧾 “Show me the JSON from the last MCP call.” | Debug raw payloads |
+
+Example citation style you should expect:
+
+> `https://members-api.parliament.uk/api/Members/Search?Name=…`
+
+---
+
+## 💬 Example prompts
+
+### Live activity
+- What is happening now in both Houses?
+- What's currently happening in the House of Commons / Lords?
+
+### Members
+- Show me the interests of Sir Keir Starmer  
+- Who is Boris Johnson? / Who is member 1471?  
+- Biography, contacts, interests, contributions, voting record for a member ID  
+- Portrait / thumbnail for member 172  
+
+### Bills
+- Recent bills about fishing / environment  
+- Details, stages, amendments, publications, news for bill 425  
+- Bill types, stages catalogue, RSS feeds  
+
+### Votes
+- Search Commons divisions for “refugee” / “climate” / “brexit”  
+- Commons or Lords division by ID; results grouped by party  
+
+### Committees
+- Committees on women's issues / healthcare  
+- Meetings, members, written & oral evidence for a committee ID  
+
+### Procedure, Hansard, calendar
+- Search Erskine May for the Mace  
+- Oral question times; Hansard on a topic and date range  
+- Parties, departments, answering bodies  
+- Commons calendar; non-sitting days  
+
+### Places, docs, transparency
+- Constituencies containing “london”; election results for a constituency ID  
+- SIs about harbours; Acts mentioning roads; treaties involving Spain  
+- Interest categories and published registers  
+
+### Power-user
+- Show the full data from this pasted API result: `{…}`  
+- Show JSON / API URL from the last MCP call  
+- Bills sponsored by member 172 from the Environment department  
+- Committee meetings on climate change between two dates  
+
+---
+
+## 🏗 What's in this repository
+
+```text
+opendata-mcp-lab/
+├── OpenData.Mcp.Server/     # .NET MCP server (stdio tools)
+│   ├── Tools/               # Members, Bills, Votes, Hansard, …
+│   └── Context/             # API shape notes for tools
+├── context/                 # Shared API context for LLMs
+├── mcp-demo.gif             # MCP assistant demo
+├── cli-demo.gif             # CLI demo (successor project only)
+└── README.md
+```
+
+**Stack:** .NET 9 · MCP stdio transport · official Parliament HTTP APIs  
+
+**Not included here:** the full **CLI**, PyPI packaging, and newer host integrations — those ship only in  
+**[uk-parliament-data-mcp](https://github.com/ChrisBrooksbank/uk-parliament-data-mcp)**.
+
+---
+
+## 📌 Active development moved
+
+| | |
+|---|---|
+| **This repo** | Historical .NET lab / reference MCP server |
+| **Go here for new work** | [github.com/ChrisBrooksbank/uk-parliament-data-mcp](https://github.com/ChrisBrooksbank/uk-parliament-data-mcp) |
+| **CLI** | **Only on the successor repo** |
+| **Package** | [PyPI: `uk-parliament-mcp`](https://pypi.org/project/uk-parliament-mcp/) (successor) |
+
+Issues and PRs against this lab may still be useful for .NET-specific notes, but feature momentum is on the new project.
+
+---
+
+## 🤝 Contributing & feedback
+
+Ideas, corrections, and API coverage suggestions are welcome. For the actively maintained line (including CLI), please open issues or PRs on the [successor repository](https://github.com/ChrisBrooksbank/uk-parliament-data-mcp).
+
+---
+
+<p align="center">
+  <sub>Built for curiosity, scrutiny, and better parliamentary questions — powered by public open data.</sub>
+</p>
