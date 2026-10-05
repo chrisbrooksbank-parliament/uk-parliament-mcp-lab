@@ -41,7 +41,7 @@ If you want the best experience today (especially terminal workflows), start on 
 
 ### MCP in an AI assistant
 
-> **Note:** Claude Code is not authorised for use on parliamentary PCs. This demo was recorded on a non-parliamentary PC.
+> **Note:** Claude Code and MCP servers are not authorised for use on parliamentary PCs. This demo was recorded on a non-parliamentary PC.
 
 Ask natural-language questions; the assistant calls Parliament APIs through MCP and returns cited answers.  
 
