@@ -1,7 +1,7 @@
 # UK Parliament AI Assistant
 
 **This repository is no longer the main line of development***
-A fork has evolved with significant enhancements, fixes, and active maintenance: https://github.com/ChrisBrooksbank/uk-parliament-mcp-lab  
+A fork has evolved with significant enhancements, fixes, and active maintenance: https://github.com/ChrisBrooksbank/uk-parliament-data-mcp
 
 **The fork includes a comprehensive command line interface and can connect to AIS with no installation**
 
